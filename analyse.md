@@ -14,6 +14,9 @@ Le but du projet est d'implémenter une interface alternative pour principalemen
 * Front-end
 
 ### Librairies
+* [csv2json](https://www.npmjs.com/package/csvjson-csv2json) pour extraire les données pour en faire des graphiques
+* [Plotly](https://plot.ly/nodejs/) pour la création de graphiques
+
 
 ### Equipe
 * Comment allez-vous vous partager le travail ?
