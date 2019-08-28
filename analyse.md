@@ -34,9 +34,10 @@ Le but du projet est d'implémenter une interface alternative pour principalemen
 
 ### Equipe
 * Comment allez-vous vous partager le travail ?
-  * Travaillant tout seul, je ferai tout le travail
-* Comment allez-vous tester les différentes parties ?
-  * Habitica offre la possibilité d'[installer localement un serveur](https://habitica.fandom.com/wiki/Setting_up_Habitica_Locally).
 
-    Je pourrai donc faire des tests sans toucher aux valeurs de production du jeu.
+Travaillant tout seul, je ferai tout le travail
+* Comment allez-vous tester les différentes parties ?
+
+Habitica offre la possibilité d'[installer localement un serveur](https://habitica.fandom.com/wiki/Setting_up_Habitica_Locally).
+Je pourrai donc faire des tests sans toucher aux valeurs de production du jeu.
 
