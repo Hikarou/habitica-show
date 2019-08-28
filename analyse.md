@@ -30,6 +30,7 @@ Le but du projet est d'implémenter une interface alternative pour principalemen
 ### Librairies
 * [csv2json](https://www.npmjs.com/package/csvjson-csv2json) pour extraire les données pour en faire des graphiques
 * [Plotly](https://plot.ly/nodejs/) pour la création de graphiques
+* [superagent](https://www.npmjs.com/package/superagent) Gestion des requêtes HTTP
 
 
 ### Equipe
