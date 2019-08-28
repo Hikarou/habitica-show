@@ -6,6 +6,20 @@
 
 Le but du projet est d'implémenter une interface alternative pour principalement faire de l'affichage de statistiques sur l'avancement de la productivité.
 
+## Fonctionnalités
+### Par ordre d'importance
+1. **Connexion (UserID + APIToken)**
+1. Affichage des tâches
+1. Création de tâches "en masse"
+1. Grapher l'avancée des tâches
+1. Grapher la période la plus active de la journée
+
+*Les données en **gras** sont les features minimales*
+
+### But première démo
+* Connexion
+* Affichage des tâches
+
 ## Organisation
 
 ### Composants
