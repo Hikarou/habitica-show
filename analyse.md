@@ -10,6 +10,8 @@ Le but du projet est d'implémenter une interface alternative pour principalemen
 
 ### Composants
 * [API habitica](https://habitica.com/apidoc/) (déjà existante)
+* Back-end Node.js
+* Front-end
 
 ### Librairies
 
