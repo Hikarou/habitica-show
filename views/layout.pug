@@ -1,7 +1,13 @@
 doctype html
+- var title = 'Habitica'
 html
   head
-    title= title
+    title #{title}
     link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
   body
+    p The habiticaAPI is : #{apiStatus}
+    block header
+      header.header
+        h1 #{title}
     block content
