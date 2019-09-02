@@ -2,18 +2,27 @@ const express = require('express');
 const router = express.Router();
 const Habit = require('../lib/habitica');
 
-//* API officiel
+/* API officiel
 let userId = "APIUser";
 let apiKey = "APItoken";
 // */
 
-/* API vide
-let userId = undefined;
-let apiKey = undefined;
+//* API vide
+let userId = "0";
+let apiKey = "0";
 // */
 
 
-const currentHabit = new Habit(userId, apiKey);
+let currentHabit = new Habit(userId, apiKey);
+
+/* API locale
+let userId = "0";
+let apiKey = "0";
+
+
+let currentHabit = new Habit(userId, apiKey,);
+// */
+
 let user = undefined;
 
 
@@ -22,7 +31,7 @@ router.get('/', function (req, res, next) {
     currentHabit.getStatus(function (error, response) {
         let vue = 'index';
         let apiStatus = JSON.parse(response.text).data.status;
-        const ready = userId !== undefined && apiKey !== undefined;
+        const ready = userId !== "0" && apiKey !== "0";
         if (!ready) {
             res.render(vue, {
                 logged: ready,
@@ -47,5 +56,12 @@ router.get('/', function (req, res, next) {
             }
         }
     });
+});
+
+router.post('/', function (req, res, next) {
+    userId = req.body.userId;
+    apiKey = req.body.apiKey;
+    currentHabit = new Habit(userId, apiKey);
+    res.redirect('/');
 });
 module.exports = router;
