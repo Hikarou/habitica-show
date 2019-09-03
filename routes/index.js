@@ -10,6 +10,7 @@ let apiKey = "APItoken";
 //* API vide
 let userId = "0";
 let apiKey = "0";
+let apiUrl = undefined;
 // */
 
 
@@ -28,16 +29,19 @@ let user = undefined;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    // get the status of the official API
     currentHabit.getStatus(function (error, response) {
         let vue = 'index';
         let apiStatus = JSON.parse(response.text).data.status;
         const ready = userId !== "0" && apiKey !== "0";
+        // If the user is not logged
         if (!ready) {
             res.render(vue, {
                 logged: ready,
                 apiStatus: apiStatus
             })
         } else {
+            // Logging
             if (user === undefined) {
                 currentHabit.getUser(function (error, response) {
                     let user = JSON.parse(response.text).data;
@@ -51,7 +55,7 @@ router.get('/', function (req, res, next) {
                         });
                     });
                 });
-            } else {
+            } else { // Logged
                 res.render(vue, {
                     logged: ready,
                     apiStatus: apiStatus,
@@ -65,7 +69,8 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     userId = req.body.userId;
     apiKey = req.body.apiKey;
-    currentHabit = new Habit(userId, apiKey);
+    apiUrl = req.body.apiUrl;
+    currentHabit = new Habit(userId, apiKey, apiUrl);
     res.redirect('/');
 });
 module.exports = router;
