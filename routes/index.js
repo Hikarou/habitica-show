@@ -40,11 +40,15 @@ router.get('/', function (req, res, next) {
         } else {
             if (user === undefined) {
                 currentHabit.getUser(function (error, response) {
-                    user = JSON.parse(response.text).data;
-                    res.render(vue, {
-                        logged: ready,
-                        apiStatus: apiStatus,
-                        profile: user.auth.local.username
+                    let user = JSON.parse(response.text).data;
+                    currentHabit.getTodoTasks(function (error, response) {
+                        let todos = response.body.data;
+                        res.render(vue, {
+                            logged: ready,
+                            apiStatus: apiStatus,
+                            profile: user.auth.local.username,
+                            todos: todos
+                        });
                     });
                 });
             } else {

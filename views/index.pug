@@ -2,6 +2,11 @@ extends layout
 block content
     if  logged
         p Welcome #{profile}
+        p Here are your current tasks :
+        ul
+            each task in todos
+                li= task.text
+
     else
         block login
             h1 Sign in
