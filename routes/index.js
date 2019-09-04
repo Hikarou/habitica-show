@@ -2,30 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Habit = require('../lib/habitica');
 
-/* API officiel
-let userId = "APIUser";
-let apiKey = "APItoken";
-// */
 
-//* API vide
 let userId = "0";
 let apiKey = "0";
 let apiUrl = undefined;
-// */
-
-
-let currentHabit = new Habit(userId, apiKey);
-
-/* API locale
-let userId = "0";
-let apiKey = "0";
-
-
-let currentHabit = new Habit(userId, apiKey,);
-// */
-
 let user = undefined;
-
+let currentHabit = new Habit(userId, apiKey);
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -70,6 +52,14 @@ router.post('/', function (req, res, next) {
     userId = req.body.userId;
     apiKey = req.body.apiKey;
     apiUrl = req.body.apiUrl;
+    currentHabit = new Habit(userId, apiKey, apiUrl);
+    res.redirect('/');
+});
+
+router.post('/logout', function (req, res, next) {
+    userId = "0";
+    apiKey = "0";
+    apiUrl = undefined;
     currentHabit = new Habit(userId, apiKey, apiUrl);
     res.redirect('/');
 });

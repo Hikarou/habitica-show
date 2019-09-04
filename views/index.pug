@@ -6,6 +6,8 @@ block content
         ul
             each task in todos
                 li= task.text
+        form(method='POST' action='/logout')
+            button.btn.btn-primary(type='submit') Logout
 
     else
         block login
