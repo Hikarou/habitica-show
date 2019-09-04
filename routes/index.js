@@ -51,7 +51,6 @@ const showTasks = function (res, vue, ready, apiStatus) {
 router.get('/', function (req, res, next) {
     // get the status of the API or the official API if apiUrl not defined
     currentHabit.getStatus(function (error, response) {
-        console.log(error);
         if (response !== undefined && response.ok) {
             const vue = 'index';
             const apiStatus = JSON.parse(response.text).data.status;
