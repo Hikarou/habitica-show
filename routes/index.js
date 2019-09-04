@@ -29,11 +29,20 @@ router.get('/', function (req, res, next) {
                     let user = JSON.parse(response.text).data;
                     currentHabit.getTodoTasks(function (error, response) {
                         let todos = response.body.data;
-                        res.render(vue, {
-                            logged: ready,
-                            apiStatus: apiStatus,
-                            profile: user.auth.local.username,
-                            todos: todos
+                        currentHabit.getDailiesTasks(function (error, response) {
+                            let dailies = response.body.data;
+                            currentHabit.getHabitsTasks(function (error, response) {
+                                let habits = response.body.data;
+                                res.render(vue, {
+                                    logged: ready,
+                                    apiStatus: apiStatus,
+                                    profile: user.auth.local.username,
+                                    todos: todos,
+                                    dailies: dailies,
+                                    habits: habits
+                                });
+                            });
+
                         });
                     });
                 });

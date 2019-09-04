@@ -1,26 +1,37 @@
 extends layout
 block content
-    if  logged
-        p Welcome #{profile}
-        p Here are your current tasks :
-        ul
-            each task in todos
-                li= task.text
-        form(method='POST' action='/logout')
-            button.btn.btn-primary(type='submit') Logout
+    div.content
+        if  logged
+            h2 Welcome #{profile} !
+            p Here are your current tasks :
+            div.tasks
+                div.task_cat
+                    h1 HABITS
+                    each task in habits
+                        div.task= task.text
+                div.task_cat
+                    h1 DAILIES
+                    each task in dailies
+                        div.task= task.text
+                div.task_cat
+                    h1 TODOS
+                    each task in todos
+                        div.task= task.text
+            form(method='POST' action='/logout')
+                button.btn.btn-primary(type='submit') Logout
 
-    else
-        block login
-            h1 Sign in
+        else
+            block login
+                h1 Sign in
 
-            form(method='POST' action='/')
-                div.form-group
-                    label(for='userId') User ID:
-                    input#name.form-control(type='text' placeholder='User ID' name='userId', required=true)
-                div.form-group
-                    label(for='apiKey') API Key:
-                    input#pw.form-control(type='password' placeholder='Password' name='apiKey' required=true)
-                div.form-group
-                    label(for='apiUrl') API URL:
-                    input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
-                button.btn.btn-primary(type='submit') Sign in
+                form(method='POST' action='/')
+                    div.form-group
+                        label(for='userId') User ID:
+                        input#name.form-control(type='text' placeholder='User ID' name='userId', required=true)
+                    div.form-group
+                        label(for='apiKey') API Key:
+                        input#pw.form-control(type='password' placeholder='Password' name='apiKey' required=true)
+                    div.form-group
+                        label(for='apiUrl') API URL:
+                        input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
+                    button.btn.btn-primary(type='submit') Sign in
