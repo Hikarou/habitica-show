@@ -16,11 +16,11 @@ block content
             form(method='POST' action='/')
                 div.form-group
                     label(for='userId') User ID:
-                    input#name.form-control(type='text', placeholder='User ID' name='userId', required=true)
+                    input#name.form-control(type='text' placeholder='User ID' name='userId', required=true)
                 div.form-group
                     label(for='apiKey') API Key:
-                    input#pw.form-control(type='password' name='apiKey', required=true)
+                    input#pw.form-control(type='password' placeholder='Password' name='apiKey' required=true)
                 div.form-group
                     label(for='apiUrl') API URL:
-                    input#apiUrl.form-control(type='url' name='apiUrl')
+                    input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
                 button.btn.btn-primary(type='submit') Sign in
