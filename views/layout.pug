@@ -9,12 +9,25 @@ html
     block header
       header.header
         a(href='./')
-          h1 #{title}
-      div.header
-        div.h_cat
-          p index
-        dev.h_cat
-          p login
+          div
+            h1 #{title}
+      div.under-header#h_login
+        div.h_cat_login
+          p Login
+        div.h_cat_login
+          p About
+      div.under-header#h_logged
+        div.h_cat_logged
+          p Index
+        div.h_cat_logged
+          p Batching tasks
+        div.h_cat_logged
+          p Graph
+        div.h_cat_logged
+          p About
+        div.h_cat_logged
+          p Logout
+
     block content
     script(src='https://code.jquery.com/jquery-3.4.1.min.js')
     script(src='/javascripts/global.js')

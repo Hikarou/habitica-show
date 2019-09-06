@@ -1,26 +1,37 @@
 let connection = undefined;
 let user = undefined;
-let todos = [];
-let dailies = [];
-let habits = [];
+let todos = undefined;
+let dailies = undefined;
+let habits = undefined;
+
+const inputUserID = $('#userId');
+const inputApiKey = $('#apiKey');
+const inputApiUrl = $('#apiUrl');
+const pageLogin = $('#login');
+const pageLogged = $('#logged');
+const catTodos = $('#todos');
+const catDailies = $('#dailies');
+const catHabits = $('#habits');
+const welcomeMessage = $('#welcome');
+const banniereLogin = $('#h_login');
+const banniereLogged = $('#h_logged');
 
 $(document).ready(function () {
     $('#btn-login').on('click', login);
     $('#btn-logout').on('click', logout);
+    banniereLogged.hide();
 });
 
-function login(event) {
-    let userID = $('#userId').val();
-    let apiKey = $('#apiKey').val();
-    let apiUrl = $('#apiUrl').val();
-    if (undefined !== userID && undefined !== apiKey) {
+function login() {
+    let valUserID = inputUserID.val();
+    let valApiKey = inputApiKey.val();
+    let valApiUrl = inputApiUrl.val();
+    if (undefined !== valUserID && undefined !== valApiKey) {
         connection = {
-            userId: userID,
-            apiKey: apiKey,
-            apiUrl: apiUrl
+            userId: valUserID,
+            apiKey: valApiKey,
+            apiUrl: valApiUrl
         };
-
-        console.log("connection :" + JSON.stringify(connection));
 
         $.getJSON('/getUser', connection, function (data, status) {
             if (status === "success") {
@@ -39,22 +50,22 @@ function login(event) {
     }
 }
 
-function logout(event) {
+function logout() {
     connection = undefined;
     user = undefined;
-    todos = [];
-    dailies = [];
-    habits = [];
-    $('#login').show();
-    $('#logged').hide();
+    todos = undefined;
+    dailies = undefined;
+    habits = undefined;
+    pageLogin.show();
+    pageLogged.hide();
 }
 
 /**
  * Get all the tasks for render in index
- * @param force If force refresh
  */
 const showTasks = function () {
-    $('#login').hide();
+    pageLogin.hide();
+    banniereLogin.hide();
     $.getJSON('/getTasks', connection, function (data, status) {
         console.log(status);
         if (status === "success") {
@@ -62,23 +73,23 @@ const showTasks = function () {
             dailies = data.dailies;
             habits = data.habits;
 
-            console.log(todos[0].text);
             let todosToShow = '<h1>TODOS</h1>\n';
             todos.forEach(elem => todosToShow += '<div class="task">' + elem.text + '</div>\n');
-            $('#todos').html(todosToShow);
+            catTodos.html(todosToShow);
 
             let dailiesToShow = '<h1>DAILIES</h1>\n';
             dailies.forEach(elem => dailiesToShow += '<div class="task">' + elem.text + '</div>\n');
-            $('#dailies').html(dailiesToShow);
+            catDailies.html(dailiesToShow);
 
             let haibitsToShow = '<h1>HABITS</h1>\n';
             habits.forEach(elem => haibitsToShow += '<div class="task">' + elem.text + '</div>\n');
-            $('#habits').html(haibitsToShow);
+            catHabits.html(haibitsToShow);
         } else {
             alert('Something went wrong with retrieving the tasks');
             return false;
         }
     });
-    $('#welcome').html('Welcome ' + user.auth.local.username + ' !');
-    $('#logged').show();
+    welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
+    pageLogged.show();
+    banniereLogged.show();
 };

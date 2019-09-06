@@ -32,7 +32,45 @@ body {
     height: 80px;
     background-color: #525286;
     color: #FFFFFF;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.under-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #525286;
+    color: #FFFFFF;
     margin-bottom: 50px;
+}
+
+.under-header a {
+    text-decoration: none;
+}
+
+.h_cat_login {
+    width: 50%;
+    border: 1px double #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #6868a3;
+}
+
+.h_cat_logged {
+    width: 20%;
+    border: 1px double #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #6868a3;
 }
 
 .content {
@@ -48,7 +86,7 @@ body {
 
 .task_cat {
     border: 1px double #000;
-    width: 30%;
+    width: 33%;
     display: flex;
     padding: 5px;
     background-color: #6868a3;
