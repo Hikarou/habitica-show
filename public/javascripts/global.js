@@ -73,7 +73,7 @@ const showTasks = function () {
 
             let haibitsToShow = '<h1>HABITS</h1>\n';
             habits.forEach(elem => haibitsToShow += '<div class="task">' + elem.text + '</div>\n');
-            $('#habits').html(dailiesToShow);
+            $('#habits').html(haibitsToShow);
         } else {
             alert('Something went wrong with retrieving the tasks');
             return false;
