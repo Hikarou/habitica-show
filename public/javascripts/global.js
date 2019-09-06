@@ -9,6 +9,7 @@ const inputApiKey = $('#apiKey');
 const inputApiUrl = $('#apiUrl');
 const pageLogin = $('#login');
 const pageLogged = $('#logged');
+const pageIndiff = $('#indiff');
 const catTodos = $('#todos');
 const catDailies = $('#dailies');
 const catHabits = $('#habits');
@@ -20,8 +21,23 @@ const pageTasks = $('#tasks');
 $(document).ready(function () {
     $('#btn-login').on('click', login);
     $('#h_c_logout').on('click', logout);
+    $('#h_c_l').on('click', getLogin);
+    $('#h_c_a').on('click', getAbout);
+    $('#h_c_about').on('click', getAbout);
     banniereLogged.hide();
 });
+
+function getLogin() {
+    pageLogged.hide();
+    pageIndiff.hide();
+    pageLogin.show();
+}
+
+function getAbout(){
+    pageLogged.hide();
+    pageLogin.hide();
+    pageIndiff.show();
+}
 
 function login() {
     let valUserID = inputUserID.val();
@@ -72,6 +88,7 @@ function logout() {
  * Get all the tasks for render in index
  */
 const showTasks = function () {
+    pageLogged.show();
     pageTasks.show();
     $.getJSON('/getTasks', connection, function (data, status) {
         console.log(status);
