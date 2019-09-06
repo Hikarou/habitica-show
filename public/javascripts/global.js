@@ -7,28 +7,40 @@ let todos = undefined;
 let dailies = undefined;
 let habits = undefined;
 
-// All elements needed several times
+////// All elements needed several times
+//// Not logged part
+const banniereLogin = $('#h_login');
+const pageLogin = $('#login');
+// login formular entries
 const inputUserID = $('#userId');
 const inputApiKey = $('#apiKey');
 const inputApiUrl = $('#apiUrl');
-const pageLogin = $('#login');
+
+//// Logged part
+const banniereLogged = $('#h_logged');
 const pageLogged = $('#logged');
-const pageIndiff = $('#indiff');
+const welcomeMessage = $('#welcome');
+// Tasks (index) page with its elements
+const pageTasks = $('#tasks');
 const catTodos = $('#todos');
 const catDailies = $('#dailies');
 const catHabits = $('#habits');
-const welcomeMessage = $('#welcome');
-const banniereLogin = $('#h_login');
-const banniereLogged = $('#h_logged');
-const pageTasks = $('#tasks');
+// page creating batch with it elements
+const pageBatch = $('#batch');
+// page Graph with its elements
+const pageGraph = $('#graph');
 
+//// Neither logged nor not logged part
+const pageIndiff = $('#indiff');
+
+// Will be triggered when the page is loaded
 $(document).ready(function () {
     $('#btn-login').on('click', login);
     $('#h_c_logout').on('click', logout);
     $('#h_c_l').on('click', getLogin);
     $('#h_c_a').on('click', getAbout);
     $('#h_c_about').on('click', getAbout);
-    banniereLogged.hide();
+    banniereLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
 });
 
 /**
@@ -56,7 +68,7 @@ const login = function () {
     let valUserID = inputUserID.val();
     let valApiKey = inputApiKey.val();
     let valApiUrl = inputApiUrl.val();
-    if (undefined !== valUserID && undefined !== valApiKey) {
+    if ("" !== valUserID && "" !== valApiKey) {
         connection = {
             userId: valUserID,
             apiKey: valApiKey,
@@ -66,7 +78,6 @@ const login = function () {
         $.getJSON('/getUser', connection, function (data, status) {
             if (status === "success") {
                 user = data.user;
-
                 pageLogin.hide();
                 banniereLogin.hide();
                 welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
@@ -102,9 +113,9 @@ const logout = function () {
  * Get all the tasks for render in index
  */
 const showTasks = function () {
+    pageIndiff.hide();
     pageLogged.show();
     pageTasks.show();
-
 
     $.getJSON('/getTasks', connection, function (data, status) {
         console.log(status);
