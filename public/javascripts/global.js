@@ -18,7 +18,7 @@ const banniereLogged = $('#h_logged');
 
 $(document).ready(function () {
     $('#btn-login').on('click', login);
-    $('#btn-logout').on('click', logout);
+    $('#h_c_logout').on('click', logout);
     banniereLogged.hide();
 });
 
@@ -56,8 +56,10 @@ function logout() {
     todos = undefined;
     dailies = undefined;
     habits = undefined;
-    pageLogin.show();
     pageLogged.hide();
+    banniereLogged.hide();
+    pageLogin.show();
+    banniereLogin.show();
 }
 
 /**
