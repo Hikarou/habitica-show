@@ -51,26 +51,34 @@ function logout(event) {
 
 /**
  * Get all the tasks for render in index
- * @param res The response that render will be call upon
- * @param vue The view to be called
  * @param force If force refresh
  */
-const showTasks = function (res, vue, force) {
+const showTasks = function () {
     $('#login').hide();
-    if (force || (todos === [] && dailies === [] && habits === [])) {
-        $.getJSON('/getTasks', connection, function (data, status) {
-            if (status === "success") {
-                todos = data.todos;
-                dailies = data.dailies;
-                habits = data.habits;
+    $.getJSON('/getTasks', connection, function (data, status) {
+        console.log(status);
+        if (status === "success") {
+            todos = data.todos;
+            dailies = data.dailies;
+            habits = data.habits;
 
-                todos.forEach()
-            } else {
-                alert('Something went wrong with retrieving the tasks');
-                return false;
-            }
-        });
-    }
+            console.log(todos[0].text);
+            let todosToShow = '<h1>TODOS</h1>\n';
+            todos.forEach(elem => todosToShow += '<div class="task">' + elem.text + '</div>\n');
+            $('#todos').html(todosToShow);
+
+            let dailiesToShow = '<h1>DAILIES</h1>\n';
+            dailies.forEach(elem => dailiesToShow += '<div class="task">' + elem.text + '</div>\n');
+            $('#dailies').html(dailiesToShow);
+
+            let haibitsToShow = '<h1>HABITS</h1>\n';
+            habits.forEach(elem => haibitsToShow += '<div class="task">' + elem.text + '</div>\n');
+            $('#habits').html(dailiesToShow);
+        } else {
+            alert('Something went wrong with retrieving the tasks');
+            return false;
+        }
+    });
     $('#welcome').html('Welcome ' + user.auth.local.username + ' !');
     $('#logged').show();
 };
