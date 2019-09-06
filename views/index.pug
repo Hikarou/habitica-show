@@ -2,18 +2,21 @@ extends layout
 block content
     div(hidden=true).logged#logged
         #welcome
-        p Here are your current tasks :
+        #tasks(hidden=true)
+            p Here are your current tasks :
 
-        div.tasks
-            div.task_cat#habits
-                h1 HABITS
-                img(src='/images/805.gif' width='64px', height='64px')
-            div.task_cat#dailies
-                h1 DAILIES
-                img(src='/images/805.gif' width='64px', height='64px')
-            div.task_cat#todos
-                h1 TODOS
-                img(src='/images/805.gif' width='64px', height='64px')
+            div.tasks
+                div.task_cat#habits
+                    h1 HABITS
+                    img(src='/images/805.gif' width='64px', height='64px')
+                div.task_cat#dailies
+                    h1 DAILIES
+                    img(src='/images/805.gif' width='64px', height='64px')
+                div.task_cat#todos
+                    h1 TODOS
+                    img(src='/images/805.gif' width='64px', height='64px')
+        #batch(hidden=true)
+        #graph(hidden=true)
     div.login#login
         h1 Sign in
             fieldset
@@ -24,3 +27,4 @@ block content
                 input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
                 br
                 button(type='button')#btn-login.btn-login Sign in
+    #about(hidden=true)

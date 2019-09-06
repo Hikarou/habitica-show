@@ -15,6 +15,7 @@ const catHabits = $('#habits');
 const welcomeMessage = $('#welcome');
 const banniereLogin = $('#h_login');
 const banniereLogged = $('#h_logged');
+const pageTasks = $('#tasks');
 
 $(document).ready(function () {
     $('#btn-login').on('click', login);
@@ -37,7 +38,12 @@ function login() {
             if (status === "success") {
                 user = data.user;
 
+                pageLogin.hide();
+                banniereLogin.hide();
+                welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
                 showTasks();
+                pageLogged.show();
+                banniereLogged.show();
             } else {
                 alert('Something is wrong with your credentials');
                 logout();
@@ -51,13 +57,13 @@ function login() {
 }
 
 function logout() {
+    pageLogged.hide();
+    banniereLogged.hide();
     connection = undefined;
     user = undefined;
     todos = undefined;
     dailies = undefined;
     habits = undefined;
-    pageLogged.hide();
-    banniereLogged.hide();
     pageLogin.show();
     banniereLogin.show();
 }
@@ -66,8 +72,7 @@ function logout() {
  * Get all the tasks for render in index
  */
 const showTasks = function () {
-    pageLogin.hide();
-    banniereLogin.hide();
+    pageTasks.show();
     $.getJSON('/getTasks', connection, function (data, status) {
         console.log(status);
         if (status === "success") {
@@ -91,7 +96,4 @@ const showTasks = function () {
             return false;
         }
     });
-    welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
-    pageLogged.show();
-    banniereLogged.show();
 };
