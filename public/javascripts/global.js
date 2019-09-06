@@ -145,6 +145,8 @@ const refreshTasks = function () {
  */
 const getTasks = function (forceResync) {
     pageIndiff.hide();
+    pageBatch.hide();
+    pageGraph.hide();
     pageLogged.show();
     pageTasks.show();
 
