@@ -1,27 +1,26 @@
 extends layout
 block content
-    div(hidden=true).logged
+    div(hidden=true).logged#logged
+        #welcome
         p Here are your current tasks :
         div.tasks
-            div.task_cat
+            div.task_cat#habits
                 h1 HABITS
                 div.task
-            div.task_cat
+            div.task_cat#dailies
                 h1 DAILIES
                 div.task
-            div.task_cat
+            div.task_cat#todos
                 h1 TODOS
                 div.task
-        form(method='POST' action='/logout')
-            button.btn-logout(type='submit') Logout
-    #login
-    div.login
+        button(type='button')#btn-logout.btn-logout Logout
+    div.login#login
         h1 Sign in
-        fieldset
-            input#userId.form-control(type='text' placeholder='User ID' name='userId', required=true)
-            br
-            input#apiKey.form-control(type='password' placeholder='Password' name='apiKey' required=true)
-            br
-            input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
-            br
-            button(type='button')#btn-login.btn-login Sign in
+            fieldset
+                input#userId.form-control(type='text' placeholder='User ID' name='userId', required=true)
+                br
+                input#apiKey.form-control(type='password' placeholder='Password' name='apiKey' required=true)
+                br
+                input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
+                br
+                button(type='button')#btn-login.btn-login Sign in

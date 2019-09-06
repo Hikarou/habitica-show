@@ -10,17 +10,6 @@ let user = undefined;
 let currentHabit = new Habit(userId, apiKey);
 
 /**
- * Reset the current params for API connection
- */
-const habiticaReset = function () {
-    userId = "0";
-    apiKey = "0";
-    apiUrl = undefined;
-    user = undefined;
-    currentHabit = new Habit(userId, apiKey);
-};
-
-/**
  * Get all the tasks for render in index
  * @param res The response that render will be call upon
  * @param vue The view to be called
@@ -49,6 +38,8 @@ const showTasks = function (res, vue, ready, apiStatus) {
 
 // Get the Home page
 router.get('/', function (req, res, next) {
+    res.render('index');
+    /*
     // get the status of the API or the official API if apiUrl not defined
     currentHabit.getStatus(function (error, response) {
         if (response !== undefined && response.ok) {
@@ -78,23 +69,35 @@ router.get('/', function (req, res, next) {
             res.render("error", {error: error, message: "API (" + apiUrl + ") is not reachable"});
         }
     });
+
+    // */
 });
 
-// For log in purpose
-router.post('/login', function (req, res, next) {
-    userId = req.body.userId;
-    apiKey = req.body.apiKey;
-    apiUrl = req.body.apiUrl;
-    currentHabit = new Habit(userId, apiKey, apiUrl);
-    res.redirect('/');
+router.get('/getUser', function (req, res, next) {
+    currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
+    currentHabit.getUser(function (error, response) {
+        let user = JSON.parse(response.text).data;
+        res.json({
+            user: user
+        });
+    });
 });
 
-// For logout purpose
-router.post('/logout', function (req, res, next) {
-    userId = "0";
-    apiKey = "0";
-    apiUrl = undefined;
-    currentHabit = new Habit(userId, apiKey, apiUrl);
-    res.redirect('/');
+router.get('/getTasks', function (req, res, next) {
+    currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
+    currentHabit.getTodoTasks(function (error, response) {
+        let todos = error !== undefined ? response.body.data : [];
+        currentHabit.getDailiesTasks(function (error, response) {
+            let dailies = error !== undefined ? response.body.data : [];
+            currentHabit.getHabitsTasks(function (error, response) {
+                let habits = error !== undefined ? response.body.data : [];
+                res.json({
+                    todos: todos,
+                    dailies: dailies,
+                    habits: habits
+                });
+            });
+        });
+    });
 });
 module.exports = router;
