@@ -17,6 +17,20 @@ block content
                     img(src='/images/805.gif' width='64px', height='64px')
             button#btn_tasks_refresh Refresh
         #batch(hidden=true)
+            p Create as much tasks as you want here :
+            fieldset
+                textarea#text-batch.text-batch(rows='10', cols='100')
+                br
+                input(id="batch_task_todo", type="radio", name="taskType", value=0, checked=true)
+                label(for ="batch_task_todo") Todo
+                br
+                input(id="batch_task_daily", type="radio", name="taskType", value=1)
+                label(for ="batch_task_daily") Daily
+                br
+                input(id="batch_task_habit", type="radio", name="taskType", value=2)
+                label(for ="batch_task_habit") Habit
+                br
+                button(type='button')#btn-batch.btn-batch Send batch
         #graph(hidden=true)
     div.login#login
         h1 Sign in

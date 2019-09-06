@@ -42,6 +42,7 @@ $(document).ready(function () {
     $('#h_c_a').on('click', getAbout);
     $('#h_c_about').on('click', getAbout);
     $('#h_c_index').on('click', getTasks);
+    $('#h_c_batch').on('click', getBatch);
     banniereLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
 });
 
@@ -162,4 +163,12 @@ const getTasks = function (forceResync) {
     } else {
         showTasks(todos, dailies, habits);
     }
+};
+
+const getBatch = function () {
+    pageIndiff.hide();
+    pageTasks.hide();
+    pageGraph.hide();
+    pageLogged.show();
+    pageBatch.show();
 };
