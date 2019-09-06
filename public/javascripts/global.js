@@ -36,10 +36,12 @@ const pageIndiff = $('#indiff');
 // Will be triggered when the page is loaded
 $(document).ready(function () {
     $('#btn-login').on('click', login);
+    $('#btn_tasks_refresh').on('click', refreshTasks);
     $('#h_c_logout').on('click', logout);
     $('#h_c_l').on('click', getLogin);
     $('#h_c_a').on('click', getAbout);
     $('#h_c_about').on('click', getAbout);
+    $('#h_c_index').on('click', getTasks);
     banniereLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
 });
 
@@ -81,7 +83,7 @@ const login = function () {
                 pageLogin.hide();
                 banniereLogin.hide();
                 welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
-                showTasks();
+                getTasks();
                 pageLogged.show();
                 banniereLogged.show();
             } else {
@@ -110,34 +112,54 @@ const logout = function () {
 };
 
 /**
- * Get all the tasks for render in index
+ * Show the tasks in the page
+ * @param todos The todos to show
+ * @param dailies The dailies to show
+ * @param habits The habits to show
  */
-const showTasks = function () {
+const showTasks = function (todos, dailies, habits) {
+    let todosToShow = '<h1>TODOS</h1>\n';
+    todos.forEach(elem => todosToShow += '<div class="task">' + elem.text + '</div>\n');
+    catTodos.html(todosToShow);
+
+    let dailiesToShow = '<h1>DAILIES</h1>\n';
+    dailies.forEach(elem => dailiesToShow += '<div class="task">' + elem.text + '</div>\n');
+    catDailies.html(dailiesToShow);
+
+    let haibitsToShow = '<h1>HABITS</h1>\n';
+    habits.forEach(elem => haibitsToShow += '<div class="task">' + elem.text + '</div>\n');
+    catHabits.html(haibitsToShow);
+};
+
+/**
+ * Refresh the tasks
+ */
+const refreshTasks = function () {
+    getTasks(true);
+};
+
+/**
+ * Get all the tasks for render in index
+ * @param forceResync : boolean to force fetch the last tasks
+ */
+const getTasks = function (forceResync) {
     pageIndiff.hide();
     pageLogged.show();
     pageTasks.show();
 
-    $.getJSON('/getTasks', connection, function (data, status) {
-        console.log(status);
-        if (status === "success") {
-            todos = data.todos;
-            dailies = data.dailies;
-            habits = data.habits;
-
-            let todosToShow = '<h1>TODOS</h1>\n';
-            todos.forEach(elem => todosToShow += '<div class="task">' + elem.text + '</div>\n');
-            catTodos.html(todosToShow);
-
-            let dailiesToShow = '<h1>DAILIES</h1>\n';
-            dailies.forEach(elem => dailiesToShow += '<div class="task">' + elem.text + '</div>\n');
-            catDailies.html(dailiesToShow);
-
-            let haibitsToShow = '<h1>HABITS</h1>\n';
-            habits.forEach(elem => haibitsToShow += '<div class="task">' + elem.text + '</div>\n');
-            catHabits.html(haibitsToShow);
-        } else {
-            alert('Something went wrong with retrieving the tasks');
-            return false;
-        }
-    });
+    if ((typeof forceResync === 'boolean' && forceResync) || (todos === undefined && dailies === undefined && habits === undefined)) {
+        // Need to fetch de data on the server
+        $.getJSON('/getTasks', connection, function (data, status) {
+            if (status === "success") {
+                todos = data.todos;
+                dailies = data.dailies;
+                habits = data.habits;
+                showTasks(todos, dailies, habits);
+            } else {
+                alert('Something went wrong with retrieving the tasks');
+            }
+        });
+    } else {
+        showTasks(todos, dailies, habits);
+    }
 };
