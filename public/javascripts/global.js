@@ -1,9 +1,13 @@
+/**
+ * All informations needed to run those pages
+ */
 let connection = undefined;
 let user = undefined;
 let todos = undefined;
 let dailies = undefined;
 let habits = undefined;
 
+// All elements needed several times
 const inputUserID = $('#userId');
 const inputApiKey = $('#apiKey');
 const inputApiUrl = $('#apiUrl');
@@ -27,19 +31,28 @@ $(document).ready(function () {
     banniereLogged.hide();
 });
 
-function getLogin() {
+/**
+ * The the login page
+ */
+const getLogin = function () {
     pageLogged.hide();
     pageIndiff.hide();
     pageLogin.show();
-}
+};
 
-function getAbout(){
+/**
+ * get the about page
+ */
+const getAbout = function () {
     pageLogged.hide();
     pageLogin.hide();
     pageIndiff.show();
-}
+};
 
-function login() {
+/**
+ * Login action
+ */
+const login = function () {
     let valUserID = inputUserID.val();
     let valApiKey = inputApiKey.val();
     let valApiUrl = inputApiUrl.val();
@@ -63,16 +76,17 @@ function login() {
             } else {
                 alert('Something is wrong with your credentials');
                 logout();
-                return false;
             }
         });
     } else {
         alert('Please fill in userID and apiKey fields');
-        return false;
     }
-}
+};
 
-function logout() {
+/**
+ * Logout action
+ */
+const logout = function () {
     pageLogged.hide();
     banniereLogged.hide();
     connection = undefined;
@@ -82,7 +96,7 @@ function logout() {
     habits = undefined;
     pageLogin.show();
     banniereLogin.show();
-}
+};
 
 /**
  * Get all the tasks for render in index
@@ -90,6 +104,8 @@ function logout() {
 const showTasks = function () {
     pageLogged.show();
     pageTasks.show();
+
+
     $.getJSON('/getTasks', connection, function (data, status) {
         console.log(status);
         if (status === "success") {
