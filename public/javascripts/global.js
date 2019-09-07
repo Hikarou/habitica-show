@@ -168,6 +168,9 @@ const getTasks = function (forceResync) {
     }
 };
 
+/**
+ * Get the batch page
+ */
 const getBatch = function () {
     pageIndiff.hide();
     pageTasks.hide();
@@ -176,6 +179,9 @@ const getBatch = function () {
     pageBatch.show();
 };
 
+/**
+ * Get the graph page
+ */
 const getGraph = function(){
     pageIndiff.hide();
     pageTasks.hide();
