@@ -9,7 +9,7 @@ let habits = undefined;
 
 ////// All elements needed several times
 //// Not logged part
-const banniereLogin = $('#h_login');
+const headerLogin = $('#h_login');
 const pageLogin = $('#login');
 // login formular entries
 const inputUserID = $('#userId');
@@ -17,7 +17,7 @@ const inputApiKey = $('#apiKey');
 const inputApiUrl = $('#apiUrl');
 
 //// Logged part
-const banniereLogged = $('#h_logged');
+const headerLogged = $('#h_logged');
 const pageLogged = $('#logged');
 const welcomeMessage = $('#welcome');
 // Tasks (index) page with its elements
@@ -35,8 +35,7 @@ const pageIndiff = $('#indiff');
 
 // Will be triggered when the page is loaded
 $(document).ready(function () {
-    $('#btn-login').on('click', login);
-    $('#btn_tasks_refresh').on('click', refreshTasks);
+    // Header interaction
     $('#h_c_logout').on('click', logout);
     $('#h_c_l').on('click', getLogin);
     $('#h_c_a').on('click', getAbout);
@@ -44,7 +43,11 @@ $(document).ready(function () {
     $('#h_c_index').on('click', getTasks);
     $('#h_c_batch').on('click', getBatch);
     $('#h_c_graph').on('click', getGraph);
-    banniereLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
+    // Buttons
+    $('#btn-login').on('click', login);
+    $('#btn_tasks_refresh').on('click', refreshTasks);
+    $('#btn-batch').on('click', addTasks);
+    headerLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
 });
 
 /**
@@ -83,11 +86,11 @@ const login = function () {
             if (status === "success") {
                 user = data.user;
                 pageLogin.hide();
-                banniereLogin.hide();
+                headerLogin.hide();
                 welcomeMessage.html('Welcome ' + user.auth.local.username + ' !');
-                getTasks();
+                getTasks(false);
                 pageLogged.show();
-                banniereLogged.show();
+                headerLogged.show();
             } else {
                 alert('Something is wrong with your credentials');
                 logout();
@@ -103,14 +106,14 @@ const login = function () {
  */
 const logout = function () {
     pageLogged.hide();
-    banniereLogged.hide();
+    headerLogged.hide();
     connection = undefined;
     user = undefined;
     todos = undefined;
     dailies = undefined;
     habits = undefined;
     pageLogin.show();
-    banniereLogin.show();
+    headerLogin.show();
 };
 
 /**

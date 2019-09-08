@@ -1,5 +1,18 @@
 extends layout
 block content
+    div.login#login
+        h1 Sign in
+            fieldset
+                input#userId.form-control(type='text' placeholder='User ID' name='userId', required=true)
+                br
+                input#apiKey.form-control(type='password' placeholder='Password' name='apiKey' required=true)
+                br
+                input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
+                br
+                button(type='button')#btn-login.btn-login Sign in
+    #indiff(hidden=true)
+        #about
+            p LOREM IPSUM
     div(hidden=true).logged#logged
         #welcome
         #tasks(hidden=true)
@@ -33,16 +46,3 @@ block content
                 button(type='button')#btn-batch.btn-batch Send batch
         #graph(hidden=true)
             p WIP
-    div.login#login
-        h1 Sign in
-            fieldset
-                input#userId.form-control(type='text' placeholder='User ID' name='userId', required=true)
-                br
-                input#apiKey.form-control(type='password' placeholder='Password' name='apiKey' required=true)
-                br
-                input#apiUrl.form-control(type='url' placeholder='http://...' name='apiUrl')
-                br
-                button(type='button')#btn-login.btn-login Sign in
-    #indiff(hidden=true)
-        #about
-            p LOREM IPSUM
