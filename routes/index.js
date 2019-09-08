@@ -42,4 +42,8 @@ router.get('/getTasks', function (req, res, next) {
         });
     });
 });
+
+router.post('/createTasks', function(req, res, next) {
+    //todo
+});
 module.exports = router;

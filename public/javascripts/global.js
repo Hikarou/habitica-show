@@ -27,6 +27,8 @@ const catDailies = $('#dailies');
 const catHabits = $('#habits');
 // page creating batch with it elements
 const pageBatch = $('#batch');
+const batchTasks = $('#text-batch');
+const batchTaskType = $("[name='taskType']");
 // page Graph with its elements
 const pageGraph = $('#graph');
 
@@ -183,9 +185,25 @@ const getBatch = function () {
 };
 
 /**
+ * Create the tasks
+ */
+const addTasks = function () {
+    let tasks = batchTasks.val().split('\n').filter(val => val !== "");
+    // Since batchTaskType is a JSON object looking like an array :
+    let taskType = batchTaskType.filter((index, val) => val.checked);
+    if (taskType.length !== 1) {
+        alert('Something is wrong with the task type !');
+    } else if (tasks === undefined || tasks.length === 0) {
+        alert('There is no tasks to create !');
+    } else {
+        // todo create each tasks
+    }
+};
+
+/**
  * Get the graph page
  */
-const getGraph = function(){
+const getGraph = function () {
     pageIndiff.hide();
     pageTasks.hide();
     pageBatch.hide();
