@@ -185,6 +185,16 @@ const getBatch = function () {
 };
 
 /**
+ * Translation task type from formular to what is expected for API
+ * @type {{"0": string, "1": string, "2": string}}
+ */
+const taskTypeTranslation = {
+    0 : "todo",
+    1 : "daily",
+    2: "habit"
+};
+
+/**
  * Create the tasks
  */
 const addTasks = function () {
@@ -196,7 +206,14 @@ const addTasks = function () {
     } else if (tasks === undefined || tasks.length === 0) {
         alert('There is no tasks to create !');
     } else {
-        // todo create each tasks
+        tasks = tasks.map(task => {
+            return {
+                "text" : task,
+                "type" : taskTypeTranslation[taskType.val()]
+            }
+        });
+
+        // todo send this data to API
     }
 };
 
