@@ -213,7 +213,28 @@ const addTasks = function () {
             }
         });
 
-        // todo send this data to API
+        let data = JSON.stringify({
+            tasks: tasks,
+            connection: connection
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '/createTasks',
+            data: data,
+            success: function () {
+                console.log("tasks created");
+            },
+            error: function () {
+                console.log("Creating tasks went wrong");
+                alert('Something went wrong with creating the tasks');
+            },
+            complete: function () {
+                getTasks(true);
+            },
+            contentType: "application/json",
+            dataType: 'json'
+        });
     }
 };
 

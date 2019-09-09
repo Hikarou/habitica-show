@@ -43,7 +43,15 @@ router.get('/getTasks', function (req, res, next) {
     });
 });
 
-router.post('/createTasks', function(req, res, next) {
-    //todo
+router.post('/createTasks', function (req, res, next) {
+    let currentHabit = new Habit(req.body.connection.userId, req.body.connection.apiKey, req.body.connection.apiUrl);
+    let tasks = req.body.tasks;
+    currentHabit.createTasks(tasks, function (error, response) {
+        if (error === null) {
+            res.send(response.body);
+        } else {
+            res.status(400).end();
+        }
+    })
 });
 module.exports = router;
