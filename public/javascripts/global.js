@@ -189,8 +189,8 @@ const getBatch = function () {
  * @type {{"0": string, "1": string, "2": string}}
  */
 const taskTypeTranslation = {
-    0 : "todo",
-    1 : "daily",
+    0: "todo",
+    1: "daily",
     2: "habit"
 };
 
@@ -208,8 +208,8 @@ const addTasks = function () {
     } else {
         tasks = tasks.map(task => {
             return {
-                "text" : task,
-                "type" : taskTypeTranslation[taskType.val()]
+                "text": task,
+                "type": taskTypeTranslation[taskType.val()]
             }
         });
 
