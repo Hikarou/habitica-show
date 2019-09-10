@@ -15,10 +15,14 @@ router.get('/', function (req, res, next) {
 router.get('/getUser', function (req, res, next) {
     let currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
     currentHabit.getUser(function (error, response) {
-        let user = JSON.parse(response.text).data;
-        res.json({
-            user: user
-        });
+        if (error === undefined) {
+            let user = JSON.parse(response.text).data;
+            res.json({
+                user: user
+            });
+        } else {
+            res.json({user : undefined});
+        }
     });
 });
 
