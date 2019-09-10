@@ -12,7 +12,16 @@ block content
                 button(type='button')#btn-login.btn-login Sign in
     #indiff(hidden=true)
         #about
-            p LOREM IPSUM
+            h1 About
+            p This platform is meant to give a different interface to 
+                a(href='habitica.com')
+                    | habitica
+            p This project involves using an 
+                a(href='https://habitica.com/apidoc/')
+                    | API
+                |  given by Habitica itself and creating new usages.
+            p In this case, batch creating tasks and showing graphs.
+
     div(hidden=true).logged#logged
         #welcome
         #tasks(hidden=true)
