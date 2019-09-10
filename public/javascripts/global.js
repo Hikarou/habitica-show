@@ -212,27 +212,19 @@ const addTasks = function () {
     } else if (tasks === undefined || tasks.length === 0) {
         alert('There is no tasks to create !');
     } else {
-        tasks = tasks.map(task => {
-            return {
-                "text": task,
-                "type": taskTypeTranslation[taskType.val()]
-            }
-        });
-
-        let data = JSON.stringify({
-            tasks: tasks,
-            connection: connection
-        });
-
         $.ajax({
             type: 'POST',
             url: '/createTasks',
-            data: data,
-            success: function () {
-                console.log("tasks created");
-            },
+            data: JSON.stringify({
+                tasks: tasks.map(task => {
+                    return {
+                        "text": task,
+                        "type": taskTypeTranslation[taskType.val()]
+                    }
+                }),
+                connection: connection
+            }),
             error: function () {
-                console.log("Creating tasks went wrong");
                 alert('Something went wrong with creating the tasks');
             },
             complete: function () {
