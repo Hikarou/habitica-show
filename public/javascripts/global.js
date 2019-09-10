@@ -85,7 +85,7 @@ const login = function () {
         };
 
         $.getJSON('/getUser', connection, function (data, status) {
-            if (status === "success") {
+            if (status === "success" && data.user !== undefined) {
                 user = data.user;
                 pageLogin.hide();
                 headerLogin.hide();
@@ -114,6 +114,9 @@ const logout = function () {
     todos = undefined;
     dailies = undefined;
     habits = undefined;
+    inputUserID.reset();
+    inputApiKey.reset();
+    inputApiUrl.reset();
     pageLogin.show();
     headerLogin.show();
 };
