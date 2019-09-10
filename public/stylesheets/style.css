@@ -99,9 +99,6 @@ body {
     background-color: #7878ac;
 }
 
-/* Buttons
-   ========================================================================== */
-
 .button {
     height: 50px;
     line-height: 50px;
@@ -109,4 +106,14 @@ body {
     text-decoration: none;
     text-align: center;
     font-size: 20px
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #525286;
+    color: #FFFFFF;
 }
