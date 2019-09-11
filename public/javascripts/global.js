@@ -245,9 +245,14 @@ const getGraph = function () {
     pageIndiff.hide();
     pageTasks.hide();
     pageBatch.hide();
+    // Fetch the data once
     if (taskHistory === undefined) {
         $.getJSON('/getHistoryCSV', connection, function (data, status) {
-            taskHistory = data.map(x => x["Date"] = new Date(x["Date"]));
+            if (status === "success") {
+                taskHistory = data.map(x => x["Date"] = new Date(x["Date"]));
+            } else {
+                alert("Could not fetch the history");
+            }
         });
     }
     pageLogged.show();
