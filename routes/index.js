@@ -61,7 +61,7 @@ router.post('/createTasks', function (req, res, next) {
  */
 router.get('/getHistoryCSV', function (req, res, next) {
     let currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
-    currentHabit.getHistory(function (error, response, next) {
+    currentHabit.getHistory(function (error, response) {
         if (error === null) {
             // Get the CSV, transform it to JSON and get rid of useless data for us
             res.send(csv2json(response.text, {parseNumbers: true}).map(x => {
