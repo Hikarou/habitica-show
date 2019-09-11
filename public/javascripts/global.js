@@ -275,7 +275,7 @@ const getGraph = function () {
                 taskHistory = data.map(x => {
                     return {
                         Type: x["Task Type"],
-                        Date: new Date(x["Date"]),
+                        Date: new Date(x["Date"] + "Z"), // Z is for UTC time
                         Value: x["Value"]
                     }
                 });
@@ -297,7 +297,7 @@ const getGraph = function () {
                     .map(x => {
                     return {
                         Type: "todo",
-                        Date: new Date(x.Date),
+                        Date: new Date(x.Date), // Here the date is already written with UTC format
                         Value: x.Value
                     }
                 }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
