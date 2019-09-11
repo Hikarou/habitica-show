@@ -250,7 +250,7 @@ const plotting = function () {
         type: 'bar'
     }];
     const layout = {
-        title: "Number of events (habits and dailies) per hour",
+        title: "Number of events per hour",
         showlegend: true,
     };
     const config = {};
