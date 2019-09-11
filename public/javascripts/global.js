@@ -6,6 +6,7 @@ let user = undefined;
 let todos = undefined;
 let dailies = undefined;
 let habits = undefined;
+let taskHistory = undefined;
 
 ////// All elements needed several times
 //// Not logged part
@@ -244,10 +245,11 @@ const getGraph = function () {
     pageIndiff.hide();
     pageTasks.hide();
     pageBatch.hide();
-    $.getJSON('/getHistoryCSV', connection, function (data, status) {
-        // todo
-        console.log(typeof data, status);
-    });
+    if (taskHistory === undefined) {
+        $.getJSON('/getHistoryCSV', connection, function (data, status) {
+            taskHistory = data.map(x => x["Date"] = new Date(x["Date"]));
+        });
+    }
     pageLogged.show();
     pageGraph.show();
 };
