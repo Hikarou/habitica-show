@@ -240,7 +240,7 @@ const addTasks = function () {
 };
 
 /**
- * Plotting 
+ * Plotting
  */
 const plotting = function () {
     let data = [{
@@ -271,6 +271,7 @@ const getGraph = function () {
     if (taskHistory === undefined) {
         $.getJSON('/getHistoryCSV', connection, function (data, status) {
             if (status === "success") {
+                // Habits and dailies tasks
                 taskHistory = data.map(x => {
                     return {
                         Type: x["Task Type"],
@@ -278,12 +279,35 @@ const getGraph = function () {
                         Value: x["Value"]
                     }
                 });
+                    
+                // T0do tasks are stored in the user profile
+                // Values are experience at a given point and we need to get the XP the achievement of the task gave
+                let mapped_tasks = [];
+                const reducer = (accumulator, currentValue) => {
+                    mapped_tasks.push({
+                        Date: currentValue.date,
+                        Value: accumulator - currentValue.value
+                    });
+                    return currentValue.value;
+                };
+                user.history.todos.reduce(reducer);
+
+                // Some tasks are not well defined with a readable date
+                mapped_tasks.filter(x => typeof x.Date !== 'number') 
+                    .map(x => {
+                    return {
+                        Type: "todo",
+                        Date: new Date(x.Date),
+                        Value: x.Value
+                    }
+                }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
+
                 plotting();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
-    } else {
+    } else { // Use the already stored data
         plotting();
     }
     pageLogged.show();
