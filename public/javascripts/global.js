@@ -244,6 +244,10 @@ const getGraph = function () {
     pageIndiff.hide();
     pageTasks.hide();
     pageBatch.hide();
+    $.getJSON('/getHistoryCSV', connection, function (data, status) {
+        // todo
+        console.log(data, status);
+    });
     pageLogged.show();
     pageGraph.show();
 };

@@ -40,6 +40,9 @@ router.get('/getTasks', function (req, res, next) {
     });
 });
 
+/**
+ * Create an array of tasks
+ */
 router.post('/createTasks', function (req, res, next) {
     let currentHabit = new Habit(req.body.connection.userId, req.body.connection.apiKey, req.body.connection.apiUrl);
     let tasks = req.body.tasks;
@@ -49,6 +52,16 @@ router.post('/createTasks', function (req, res, next) {
         } else {
             res.status(400).end();
         }
+    })
+});
+
+/**
+ * Get the history
+ */
+router.get('/getHistoryCSV', function (req, res, next) {
+    let currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
+    currentHabit.getHistory(function (req, res, next) {
+        // todo
     })
 });
 module.exports = router;
