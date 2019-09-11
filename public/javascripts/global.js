@@ -167,7 +167,7 @@ const getTasks = function (forceResync) {
     if ((typeof forceResync === 'boolean' && forceResync) || (todos === undefined && dailies === undefined && habits === undefined)) {
         // Need to fetch de data on the server
         $.getJSON('/getTasks', connection, function (data, status) {
-            if (status === "success") {
+            if (status === "success" && data !== undefined) {
                 todos = data.todos;
                 dailies = data.dailies;
                 habits = data.habits;
@@ -270,7 +270,7 @@ const getGraph = function () {
     // Fetch the data once
     if (taskHistory === undefined) {
         $.getJSON('/getHistoryCSV', connection, function (data, status) {
-            if (status === "success") {
+            if (status === "success" && data !== undefined) {
                 // Habits and dailies tasks
                 taskHistory = data.map(x => {
                     return {
