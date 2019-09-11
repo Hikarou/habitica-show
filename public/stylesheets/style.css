@@ -99,6 +99,16 @@ body {
     background-color: #7878ac;
 }
 
+.plot {
+    height: 500px;
+    width: 1900px;
+    max-height: 500px;
+    max-width: 1900px;
+    min-height: 100px;
+    min-width: 400px;
+    background-color: #6868a3;
+}
+
 .button {
     height: 50px;
     line-height: 50px;
