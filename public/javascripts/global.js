@@ -32,6 +32,7 @@ const batchTasks = $('#text-batch');
 const batchTaskType = $("[name='taskType']");
 // page Graph with its elements
 const pageGraph = $('#graph');
+const showPlot = document.getElementById('plot'); // For plotly
 
 //// Neither logged nor not logged part
 const pageIndiff = $('#indiff');
@@ -239,6 +240,27 @@ const addTasks = function () {
 };
 
 /**
+ * Plotting 
+ */
+const plotting = function () {
+    let data = [{
+        x: Array.from({length: 24}, (_, k) => k),
+        y: Array.from({length: 24}, () => 0),
+        name: "Events",
+        type: 'bar'
+    }];
+    const layout = {
+        title: "Number of events (habits and dailies) per hour",
+        showlegend: true,
+    };
+    const config = {};
+    if (taskHistory !== undefined) {
+        taskHistory.forEach((elem, _) => data[0].y[elem["Date"].getHours()]++);
+        Plotly.plot(showPlot, data, layout, config);
+    }
+};
+
+/**
  * Get the graph page
  */
 const getGraph = function () {
@@ -249,11 +271,20 @@ const getGraph = function () {
     if (taskHistory === undefined) {
         $.getJSON('/getHistoryCSV', connection, function (data, status) {
             if (status === "success") {
-                taskHistory = data.map(x => x["Date"] = new Date(x["Date"]));
+                taskHistory = data.map(x => {
+                    return {
+                        Type: x["Task Type"],
+                        Date: new Date(x["Date"]),
+                        Value: x["Value"]
+                    }
+                });
+                plotting();
             } else {
-                alert("Could not fetch the history");
+                alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
+    } else {
+        plotting();
     }
     pageLogged.show();
     pageGraph.show();
