@@ -246,7 +246,7 @@ const getGraph = function () {
     pageBatch.hide();
     $.getJSON('/getHistoryCSV', connection, function (data, status) {
         // todo
-        console.log(data, status);
+        console.log(typeof data, status);
     });
     pageLogged.show();
     pageGraph.show();

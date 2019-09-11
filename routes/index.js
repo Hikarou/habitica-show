@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Habit = require('../lib/habitica');
+const csv2json = require('csvjson-csv2json');
 
 /**
  * Get the homepage route
@@ -60,8 +61,21 @@ router.post('/createTasks', function (req, res, next) {
  */
 router.get('/getHistoryCSV', function (req, res, next) {
     let currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
-    currentHabit.getHistory(function (req, res, next) {
-        // todo
+    currentHabit.getHistory(function (error, response, next) {
+        if (error === null) {
+            const csv = response.text;
+            const json = csv2json(csv, {parseNumbers: true});
+            const filteredJson = json.map(x => {
+                return {
+                    Type: x["Task Type"],
+                    Date: x["Date"],
+                    Value: x["Value"]
+                }
+            });
+            res.send(json);
+        } else {
+            res.status(400).end();
+        }
     })
 });
 module.exports = router;
