@@ -63,16 +63,14 @@ router.get('/getHistoryCSV', function (req, res, next) {
     let currentHabit = new Habit(req.query.userId, req.query.apiKey, req.query.apiUrl);
     currentHabit.getHistory(function (error, response, next) {
         if (error === null) {
-            const csv = response.text;
-            const json = csv2json(csv, {parseNumbers: true});
-            const filteredJson = json.map(x => {
+            // Get the CSV, transform it to JSON and get rid of useless data for us
+            res.send(csv2json(response.text, {parseNumbers: true}).map(x => {
                 return {
                     Type: x["Task Type"],
                     Date: x["Date"],
                     Value: x["Value"]
                 }
-            });
-            res.send(json);
+            }));
         } else {
             res.status(400).end();
         }
