@@ -337,25 +337,26 @@ const plottingXPEvolution = function () {
 };
 
 /**
+ * Initialize a bar
+ * @param name The name of the stack
+ * @returns {{x: *, name: *, y: *, type: string}}
+ */
+const initializeBarForADay = function (name) {
+    return {
+        x: Array.from({length: 24}, (_, k) => k),
+        y: Array.from({length: 24}, () => 0),
+        name: name,
+        type: 'bar'
+    }
+};
+
+/**
  * Plotting stacked bars
  */
 const plottingStakedTasks = function () {
-    /**
-     * Initialize a stack
-     * @param name The name of the stack
-     * @returns {{x: *, name: *, y: *, type: string}}
-     */
-    const initializeStack = function (name){
-        return {
-            x: Array.from({length: 24}, (_, k) => k),
-            y: Array.from({length: 24}, () => 0),
-            name: name,
-            type: 'bar'
-        }
-    };
-    let todos = initializeStack("Todos");
-    let habits = initializeStack("Habits");
-    let dailies = initializeStack("Dailies");
+    let todos = initializeBarForADay("Todos");
+    let habits = initializeBarForADay("Habits");
+    let dailies = initializeBarForADay("Dailies");
     const layout = {
         title: "Number of events per hour, per task type",
         showlegend: true,
@@ -375,12 +376,7 @@ const plottingStakedTasks = function () {
  * Bar plotting all tasks
  */
 const plottingAllTasks = function () {
-    let data = [{
-        x: Array.from({length: 24}, (_, k) => k),
-        y: Array.from({length: 24}, () => 0),
-        name: "Events",
-        type: 'bar'
-    }];
+    let data = [initializeBarForADay("Events")];
     const layout = {
         title: "Number of events per hour",
         showlegend: true,
