@@ -336,7 +336,7 @@ const plottingXPEvolution = function () {
             }
         });
         let data = [baseXP, todos, habits, dailies];
-        Plotly.plot(xpEvol[0], data, layout, config);
+        Plotly.newPlot(xpEvol[0], data, layout, config);
         xpEvol.show();
     }
 };
@@ -373,7 +373,7 @@ const plottingStakedTasks = function () {
         taskHistory.filter(x => x["Type"] === "habit").forEach((elem, _) => habits.y[elem["Date"].getHours()]++);
         taskHistory.filter(x => x["Type"] === "daily").forEach((elem, _) => dailies.y[elem["Date"].getHours()]++);
         let data = [todos, habits, dailies];
-        Plotly.plot(stakedTasks[0], data, layout, config);
+        Plotly.newPlot(stakedTasks[0], data, layout, config);
         stakedTasks.show();
     }
 };
@@ -390,7 +390,7 @@ const plottingAllTasks = function () {
     const config = {};
     if (taskHistory !== undefined) {
         taskHistory.forEach((elem, _) => data[0].y[elem["Date"].getHours()]++);
-        Plotly.plot(plotAllTasks[0], data, layout, config);
+        Plotly.newPlot(plotAllTasks[0], data, layout, config);
         plotAllTasks.show();
     }
 };
