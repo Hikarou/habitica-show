@@ -240,6 +240,30 @@ const addTasks = function () {
 };
 
 /**
+ * Get the number of days between two dates
+ * @param date1 first date
+ * @param date2 second date
+ * @returns {number} number of days between two dates
+ */
+const daysBetween = function (date1, date2) {
+    if (date1 === undefined || date2 === undefined) return -1;
+    return Math.round(Math.abs(date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
+};
+
+/**
+ * Get the days in between the two days [startDate; endDate[
+ * @param startDate
+ * @param endDate
+ * @returns {Date[]}
+ */
+const getDaysBetweenArray = function (startDate, endDate) {
+    const duration = endDate - startDate;
+    const dayInterval = 1000 * 60 * 60 * 24;
+    const steps = duration / dayInterval;
+    return Array.from({length: steps}, (v, i) => new Date(startDate.valueOf() + (dayInterval * i)));
+};
+
+/**
  * Plotting
  */
 const plottingXPEvolution = function () {
@@ -271,6 +295,16 @@ const plottingXPEvolution = function () {
         taskHistory.forEach((elem, _) => {
             let curDate = new Date(elem['Date'].getFullYear(), elem['Date'].getMonth(), elem['Date'].getDate());
             if (baseXP.x.length === 0 || baseXP.x[baseXP.x.length - 1] - curDate !== 0) { // New day, new entry
+                // fill the gap if not played during whole days
+                const numberOfDaysInBetween = daysBetween(baseXP.x[baseXP.x.length - 1], curDate);
+                if (numberOfDaysInBetween > 1) {
+                    let days = getDaysBetweenArray(baseXP.x[baseXP.x.length - 1], curDate);
+                    days.shift();
+                    days.forEach((day) => {
+                        baseXP.x.push(day);
+                        baseXP.y.push(curBaseXP);
+                    });
+                }
                 baseXP.x.push(curDate);
                 baseXP.y.push(curBaseXP);
             }
