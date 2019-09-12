@@ -240,9 +240,9 @@ const addTasks = function () {
 };
 
 /**
- * Plotting
+ * Bar plotting all tasks
  */
-const plotting = function () {
+const plottingAllTasks = function () {
     let data = [{
         x: Array.from({length: 24}, (_, k) => k),
         y: Array.from({length: 24}, () => 0),
@@ -302,13 +302,13 @@ const getGraph = function () {
                     }
                 }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
-                plotting();
+                plottingAllTasks();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
     } else { // Use the already stored data
-        plotting();
+        plottingAllTasks();
     }
     pageLogged.show();
     pageGraph.show();
