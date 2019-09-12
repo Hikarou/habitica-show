@@ -32,7 +32,10 @@ const batchTasks = $('#text-batch');
 const batchTaskType = $("[name='taskType']");
 // page Graph with its elements
 const pageGraph = $('#graph');
-const showPlot = document.getElementById('plot'); // For plotly
+const plotAllTasks = $('#all-tasks');
+const stakedTasks = $('#stacked-tasks');
+const xpEvol = $('#xp-evol');
+const plotType = $("[name='graphType']");
 
 //// Neither logged nor not logged part
 const pageIndiff = $('#indiff');
@@ -51,6 +54,7 @@ $(document).ready(function () {
     $('#btn-login').on('click', login);
     $('#btn_tasks_refresh').on('click', refreshTasks);
     $('#btn-batch').on('click', addTasks);
+    $('#btn-graph').on('click', plotSomething);
     headerLogged.hide(); // This is needed since the banniere is displayed as flex and can not be hidden beforehand
 });
 
@@ -332,7 +336,8 @@ const plottingXPEvolution = function () {
             }
         });
         let data = [baseXP, todos, habits, dailies];
-        Plotly.plot(showPlot, data, layout, config);
+        Plotly.plot(xpEvol[0], data, layout, config);
+        xpEvol.show();
     }
 };
 
@@ -368,7 +373,8 @@ const plottingStakedTasks = function () {
         taskHistory.filter(x => x["Type"] === "habit").forEach((elem, _) => habits.y[elem["Date"].getHours()]++);
         taskHistory.filter(x => x["Type"] === "daily").forEach((elem, _) => dailies.y[elem["Date"].getHours()]++);
         let data = [todos, habits, dailies];
-        Plotly.plot(showPlot, data, layout, config);
+        Plotly.plot(stakedTasks[0], data, layout, config);
+        stakedTasks.show();
     }
 };
 
@@ -384,7 +390,30 @@ const plottingAllTasks = function () {
     const config = {};
     if (taskHistory !== undefined) {
         taskHistory.forEach((elem, _) => data[0].y[elem["Date"].getHours()]++);
-        Plotly.plot(showPlot, data, layout, config);
+        Plotly.plot(plotAllTasks[0], data, layout, config);
+        plotAllTasks.show();
+    }
+};
+
+/**
+ * Plot something
+ */
+const plotSomething = function () {
+    plotAllTasks.hide();
+    stakedTasks.hide();
+    xpEvol.hide();
+    let plot = plotType.filter((index, val) => val.checked);
+    if (plot.length !== 1) {
+        alert('Something is wrong with the plot type !');
+    } else if (plot.val() === "0") {
+        plottingAllTasks();
+        plotAllTasks.show();
+    } else if (plot.val() === "1") {
+        plottingStakedTasks();
+        stakedTasks.show();
+    } else if (plot.val() === "2") {
+        plottingXPEvolution();
+        xpEvol.show();
     }
 };
 
@@ -431,13 +460,13 @@ const getGraph = function () {
                     }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
                 taskHistory.sort((x, y) => x["Date"] - y["Date"]); // Sort the tasks by date for date related plots
-                plottingXPEvolution();
+                plotSomething();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
     } else { // Use the already stored data
-        plottingXPEvolution();
+        plotSomething();
     }
     pageLogged.show();
     pageGraph.show();

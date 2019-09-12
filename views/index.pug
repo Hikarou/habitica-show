@@ -54,4 +54,17 @@ block content
                 br
                 button(type='button')#btn-batch.btn-batch Send batch
         #graph(hidden=true)
-            div#plot.plot
+            fieldset
+                input(id="graph_all_tasks", type="radio", name="graphType", value=0, checked=true)
+                label(for ="graph_all_tasks") Number of events per hour
+                br
+                input(id="graph_all_tasks_type", type="radio", name="graphType", value=1)
+                label(for ="graph_all_tasks_type") Number of events per hour, per task type
+                br
+                input(id="graph_xp", type="radio", name="graphType", value=2)
+                label(for ="graph_xp") Evolution of XP in time
+                br
+                button(type='button')#btn-graph.btn-graph Show selected graph
+            div.plot#all-tasks(hidden=true)
+            div.plot#stacked-tasks(hidden=true)
+            div.plot#xp-evol(hidden=true)
