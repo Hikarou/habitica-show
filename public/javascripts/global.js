@@ -163,9 +163,9 @@ const getTasks = function (forceResync) {
     pageIndiff.hide();
     pageBatch.hide();
     pageGraph.hide();
-    catTodos.html('<h1>TODOS</h1><img src="/images/805.gif" width="64px" height="64px">');
-    catDailies.html('<h1>DAILIES</h1><img src="/images/805.gif" width="64px" height="64px">');
-    catHabits.html('<h1>HABITS</h1><img src="/images/805.gif" width="64px" height="64px">');
+    catTodos.html('<h1>TODOS</h1><img src="/images/805.gif" width="64px" height="64px" alt="Loading gif">');
+    catDailies.html('<h1>DAILIES</h1><img src="/images/805.gif" width="64px" height="64px" alt="Loading gif">');
+    catHabits.html('<h1>HABITS</h1><img src="/images/805.gif" width="64px" height="64px" alt="Loading gif">');
     pageLogged.show();
     pageTasks.show();
 
