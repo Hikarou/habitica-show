@@ -274,7 +274,7 @@ const getGraph = function () {
                 // Habits and dailies tasks
                 taskHistory = data.map(x => {
                     return {
-                        Type: x["Task Type"],
+                        Type: x["Type"],
                         Date: new Date(x["Date"] + "Z"), // Z is for UTC time
                         Value: x["Value"]
                     }
