@@ -240,6 +240,62 @@ const addTasks = function () {
 };
 
 /**
+ * Plotting 
+ */
+const plottingXPEvolution = function () {
+    let todos = {
+        x: [],
+        y: [],
+        name: "Todos",
+        stackgroup: 'one'
+    };
+    let habits = {
+        x: [],
+        y: [],
+        name: "Habits",
+        stackgroup: 'one'
+    };
+    let dailies = {
+        x: [],
+        y: [],
+        name: "Dailies",
+        stackgroup: 'one'
+    };
+    let baseXP = {
+        x: [],
+        y: [],
+        name: "Base XP of the day",
+        stackgroup: 'one'
+    };
+
+    const layout = {
+        title: "Evolution of XP in time",
+        showlegend: true,
+    };
+    const config = {};
+    if (taskHistory !== undefined) {
+        let curBaseXP = 0;
+        taskHistory.forEach((elem, _) => {
+            baseXP.x.push(elem["Date"]);
+            baseXP.y.push(curBaseXP);
+            curBaseXP += elem["Value"];
+            if (elem["Type"] === "todo") {
+                todos.x.push(elem["Date"]);
+                todos.y.push(elem["Value"]);
+            } else if (elem["Type"] === "habit"){
+                habits.x.push(elem["Date"]);
+                habits.y.push(elem["Value"]);
+            } else {
+                dailies.x.push(elem["Date"]);
+                dailies.y.push(elem["Value"]);
+            }
+        });
+        let data = [baseXP, todos, habits, dailies];
+        Plotly.plot(showPlot, data, layout, config);
+    }
+};
+
+/**
  * Plotting stacked bars
  */
 const plottingStakedTasks = function () {
@@ -340,13 +396,13 @@ const getGraph = function () {
                 }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
                 taskHistory.sort((x, y )=> x["Date"] - y["Date"]); // Sort the tasks by date for date related plots
-                plottingStakedTasks();
+                plottingXPEvolution();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
     } else { // Use the already stored data
-        plottingStakedTasks();
+        plottingXPEvolution();
     }
     pageLogged.show();
     pageGraph.show();
