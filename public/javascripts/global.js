@@ -243,30 +243,23 @@ const addTasks = function () {
  * Plotting
  */
 const plottingXPEvolution = function () {
-    let todos = {
-        x: [],
-        y: [],
-        name: "Todos",
-        stackgroup: 'one'
+    /**
+     * Initialize a stack
+     * @param name The name of the stack
+     * @returns {{stackgroup: string, x: [], name: *, y: []}}
+     */
+    const initializeStack = function (name) {
+        return {
+            x: [],
+            y: [],
+            name: name,
+            stackgroup: 'one'
+        }
     };
-    let habits = {
-        x: [],
-        y: [],
-        name: "Habits",
-        stackgroup: 'one'
-    };
-    let dailies = {
-        x: [],
-        y: [],
-        name: "Dailies",
-        stackgroup: 'one'
-    };
-    let baseXP = {
-        x: [],
-        y: [],
-        name: "Base XP of the day",
-        stackgroup: 'one'
-    };
+    let todos = initializeStack("Todos");
+    let habits = initializeStack("Habits");
+    let dailies = initializeStack("Dailies");
+    let baseXP = initializeStack("Base XP of the day");
 
     const layout = {
         title: "Evolution of XP in time",
@@ -283,27 +276,25 @@ const plottingXPEvolution = function () {
             }
             curBaseXP += elem["Value"];
 
+            /**
+             * Adds the element in the given category
+             * @param category
+             */
+            const addTheTaskToCategory = function (category) {
+                if (category.x.length === 0 || category.x[category.x.length - 1] - curDate !== 0) {
+                    category.x.push(curDate);
+                    category.y.push(elem["Value"]);
+                } else {
+                    category.y[category.y.length - 1] += elem["Value"];
+                }
+            };
+
             if (elem["Type"] === "todo") {
-                if (todos.x.length === 0 || todos.x[todos.x.length - 1] - curDate !== 0) {
-                    todos.x.push(curDate);
-                    todos.y.push(elem["Value"]);
-                } else {
-                    todos.y[todos.y.length - 1] += elem["Value"];
-                }
+                addTheTaskToCategory(todos);
             } else if (elem["Type"] === "habit") {
-                if (habits.x.length === 0 || habits.x[habits.x.length - 1] - curDate !== 0) {
-                    habits.x.push(curDate);
-                    habits.y.push(elem["Value"]);
-                } else {
-                    habits.y[habits.y.length - 1] += elem["Value"];
-                }
+                addTheTaskToCategory(habits);
             } else {
-                if (dailies.x.length === 0 || dailies.x[dailies.x.length - 1] - curDate !== 0) {
-                    dailies.x.push(curDate);
-                    dailies.y.push(elem["Value"]);
-                } else {
-                    dailies.y[dailies.y.length - 1] += elem["Value"];
-                }
+                addTheTaskToCategory(dailies);
             }
         });
         let data = [baseXP, todos, habits, dailies];
@@ -315,24 +306,22 @@ const plottingXPEvolution = function () {
  * Plotting stacked bars
  */
 const plottingStakedTasks = function () {
-    let todos = {
-        x: Array.from({length: 24}, (_, k) => k),
-        y: Array.from({length: 24}, () => 0),
-        name: "Todos",
-        type: 'bar'
+    /**
+     * Initialize a stack
+     * @param name The name of the stack
+     * @returns {{stackgroup: string, x: [], name: *, y: []}}
+     */
+    const initializeStack = function (name){
+        return {
+            x: Array.from({length: 24}, (_, k) => k),
+            y: Array.from({length: 24}, () => 0),
+            name: name,
+            type: 'bar'
+        }
     };
-    let habits = {
-        x: Array.from({length: 24}, (_, k) => k),
-        y: Array.from({length: 24}, () => 0),
-        name: "Habits",
-        type: 'bar'
-    };
-    let dailies = {
-        x: Array.from({length: 24}, (_, k) => k),
-        y: Array.from({length: 24}, () => 0),
-        name: "Dailies",
-        type: 'bar'
-    };
+    let todos = initializeStack("Todos");
+    let habits = initializeStack("Habits");
+    let dailies = initializeStack("Dailies");
     const layout = {
         title: "Number of events per hour, per task type",
         showlegend: true,
