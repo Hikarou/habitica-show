@@ -240,7 +240,7 @@ const addTasks = function () {
 };
 
 /**
- * Plotting 
+ * Plotting
  */
 const plottingXPEvolution = function () {
     let todos = {
@@ -276,18 +276,34 @@ const plottingXPEvolution = function () {
     if (taskHistory !== undefined) {
         let curBaseXP = 0;
         taskHistory.forEach((elem, _) => {
-            baseXP.x.push(elem["Date"]);
-            baseXP.y.push(curBaseXP);
+            let curDate = new Date(elem['Date'].getFullYear(), elem['Date'].getMonth(), elem['Date'].getDate());
+            if (baseXP.x.length === 0 || baseXP.x[baseXP.x.length - 1] - curDate !== 0) { // New day, new entry
+                baseXP.x.push(curDate);
+                baseXP.y.push(curBaseXP);
+            }
             curBaseXP += elem["Value"];
+
             if (elem["Type"] === "todo") {
-                todos.x.push(elem["Date"]);
-                todos.y.push(elem["Value"]);
-            } else if (elem["Type"] === "habit"){
-                habits.x.push(elem["Date"]);
-                habits.y.push(elem["Value"]);
+                if (todos.x.length === 0 || todos.x[todos.x.length - 1] - curDate !== 0) {
+                    todos.x.push(curDate);
+                    todos.y.push(elem["Value"]);
+                } else {
+                    todos.y[todos.y.length - 1] += elem["Value"];
+                }
+            } else if (elem["Type"] === "habit") {
+                if (habits.x.length === 0 || habits.x[habits.x.length - 1] - curDate !== 0) {
+                    habits.x.push(curDate);
+                    habits.y.push(elem["Value"]);
+                } else {
+                    habits.y[habits.y.length - 1] += elem["Value"];
+                }
             } else {
-                dailies.x.push(elem["Date"]);
-                dailies.y.push(elem["Value"]);
+                if (dailies.x.length === 0 || dailies.x[dailies.x.length - 1] - curDate !== 0) {
+                    dailies.x.push(curDate);
+                    dailies.y.push(elem["Value"]);
+                } else {
+                    dailies.y[dailies.y.length - 1] += elem["Value"];
+                }
             }
         });
         let data = [baseXP, todos, habits, dailies];
@@ -372,7 +388,7 @@ const getGraph = function () {
                         Value: x["Value"]
                     }
                 });
-                    
+
                 // T0do tasks are stored in the user profile
                 // Values are experience at a given point and we need to get the XP the achievement of the task gave
                 let mapped_tasks = [];
@@ -386,16 +402,16 @@ const getGraph = function () {
                 user.history.todos.reduce(reducer);
 
                 // Some tasks are not well defined with a readable date
-                mapped_tasks.filter(x => typeof x.Date !== 'number') 
+                mapped_tasks.filter(x => typeof x.Date !== 'number')
                     .map(x => {
-                    return {
-                        Type: "todo",
-                        Date: new Date(x.Date), // Here the date is already written with UTC format
-                        Value: x.Value
-                    }
-                }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
+                        return {
+                            Type: "todo",
+                            Date: new Date(x.Date), // Here the date is already written with UTC format
+                            Value: x.Value
+                        }
+                    }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
-                taskHistory.sort((x, y )=> x["Date"] - y["Date"]); // Sort the tasks by date for date related plots
+                taskHistory.sort((x, y) => x["Date"] - y["Date"]); // Sort the tasks by date for date related plots
                 plottingXPEvolution();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
