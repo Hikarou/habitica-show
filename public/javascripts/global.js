@@ -309,7 +309,7 @@ const plottingStakedTasks = function () {
     /**
      * Initialize a stack
      * @param name The name of the stack
-     * @returns {{stackgroup: string, x: [], name: *, y: []}}
+     * @returns {{x: *, name: *, y: *, type: string}}
      */
     const initializeStack = function (name){
         return {
