@@ -240,6 +240,43 @@ const addTasks = function () {
 };
 
 /**
+ * Plotting stacked bars
+ */
+const plottingStakedTasks = function () {
+    let todos = {
+        x: Array.from({length: 24}, (_, k) => k),
+        y: Array.from({length: 24}, () => 0),
+        name: "Todos",
+        type: 'bar'
+    };
+    let habits = {
+        x: Array.from({length: 24}, (_, k) => k),
+        y: Array.from({length: 24}, () => 0),
+        name: "Habits",
+        type: 'bar'
+    };
+    let dailies = {
+        x: Array.from({length: 24}, (_, k) => k),
+        y: Array.from({length: 24}, () => 0),
+        name: "Dailies",
+        type: 'bar'
+    };
+    const layout = {
+        title: "Number of events per hour, per task type",
+        showlegend: true,
+        barmode: 'stack'
+    };
+    const config = {};
+    if (taskHistory !== undefined) {
+        taskHistory.filter(x => x["Type"] === "todo").forEach((elem, _) => todos.y[elem["Date"].getHours()]++);
+        taskHistory.filter(x => x["Type"] === "habit").forEach((elem, _) => habits.y[elem["Date"].getHours()]++);
+        taskHistory.filter(x => x["Type"] === "daily").forEach((elem, _) => dailies.y[elem["Date"].getHours()]++);
+        let data = [todos, habits, dailies];
+        Plotly.plot(showPlot, data, layout, config);
+    }
+};
+
+/**
  * Bar plotting all tasks
  */
 const plottingAllTasks = function () {
@@ -302,13 +339,13 @@ const getGraph = function () {
                     }
                 }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
-                plottingAllTasks();
+                plottingStakedTasks();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
             }
         });
     } else { // Use the already stored data
-        plottingAllTasks();
+        plottingStakedTasks();
     }
     pageLogged.show();
     pageGraph.show();
