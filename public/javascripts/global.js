@@ -115,6 +115,7 @@ const login = function () {
 const logout = function () {
     pageLogged.hide();
     headerLogged.hide();
+    pageIndiff.hide();
     connection = undefined;
     user = undefined;
     todos = undefined;
