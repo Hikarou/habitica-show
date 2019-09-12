@@ -323,7 +323,7 @@ const getGraph = function () {
                 const reducer = (accumulator, currentValue) => {
                     mapped_tasks.push({
                         Date: currentValue.date,
-                        Value: accumulator - currentValue.value
+                        Value: accumulator - currentValue.value // Values are negative
                     });
                     return currentValue.value;
                 };
@@ -339,6 +339,7 @@ const getGraph = function () {
                     }
                 }).forEach(x => taskHistory.push(x)); // Add the t0do tasks to the task history 
 
+                taskHistory.sort((x, y )=> x["Date"] - y["Date"]); // Sort the tasks by date for date related plots
                 plottingStakedTasks();
             } else {
                 alert("Could not fetch the history.\nPlease, try again later.");
