@@ -294,7 +294,7 @@ const plottingXPEvolution = function () {
         title: "Evolution of XP in time",
         showlegend: true,
     };
-    const config = {};
+    const config = {responsive: true};
     if (taskHistory !== undefined) {
         let curBaseXP = 0;
         taskHistory.forEach((elem, _) => {
@@ -368,7 +368,7 @@ const plottingStakedTasks = function () {
         showlegend: true,
         barmode: 'stack'
     };
-    const config = {};
+    const config = {responsive: true};
     if (taskHistory !== undefined) {
         taskHistory.filter(x => x["Type"] === "todo").forEach((elem, _) => todos.y[elem["Date"].getHours()]++);
         taskHistory.filter(x => x["Type"] === "habit").forEach((elem, _) => habits.y[elem["Date"].getHours()]++);
@@ -388,7 +388,7 @@ const plottingAllTasks = function () {
         title: "Number of events per hour",
         showlegend: true,
     };
-    const config = {};
+    const config = {responsive: true};
     if (taskHistory !== undefined) {
         taskHistory.forEach((elem, _) => data[0].y[elem["Date"].getHours()]++);
         Plotly.newPlot(plotAllTasks[0], data, layout, config);
